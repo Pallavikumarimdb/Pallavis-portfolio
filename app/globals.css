@@ -64,6 +64,9 @@
   display: none;
 }
 
+html{
+    user-select: text; /* Enable text selection */
+}
 
 
 html {
