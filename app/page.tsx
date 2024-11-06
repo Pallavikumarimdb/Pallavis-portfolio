@@ -3,7 +3,7 @@ import Hero from "@/components/main/Hero";
 import Projects from "@/components/main/Projects";
 import Skills from "@/components/main/Skills";
 import {TimelineDemo} from "@/components/sub/TimelineContent";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
   return (
