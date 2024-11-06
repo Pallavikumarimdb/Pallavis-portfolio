@@ -20,15 +20,15 @@ const Footer = () => {
                         <div className="font-bold text-[20px]">Connect</div>
                         <a href="https://github.com/Pallavikumarimdb" className="flex flex-row items-center my-[15px] cursor-pointer">
                             <RxGithubLogo />
-                            <span className="text-[15px] ml-[6px]">Youtube</span>
+                            <span className="text-[15px] ml-[6px]">Github</span>
                         </a>
                         <a href="https://www.linkedin.com/in/pallavisprofile/" className="flex flex-row items-center my-[15px] cursor-pointer">
                             <RxLinkedinLogo />
-                            <span className="text-[15px] ml-[6px]">Github</span>
+                            <span className="text-[15px] ml-[6px]">Linkedin</span>
                         </a>
                         <a href="https://x.com/pallavimdb" className="flex flex-row items-center my-[15px] cursor-pointer">
                             <RxTwitterLogo />
-                            <span className="text-[15px] ml-[6px]">Discord</span>
+                            <span className="text-[15px] ml-[6px]">Twitter</span>
                         </a>
                     </div>
 
