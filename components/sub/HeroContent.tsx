@@ -53,7 +53,7 @@ const HeroContent = () => {
           variants={slideInFromLeft(1)}
           className="py-2 button-primary text-center text-white cursor-pointer rounded-lg max-w-[200px]"
         >
-          Resume
+          <a href="https://drive.google.com/file/d/1vNgaq9Pxr3JwfgvIc53RxTniiResFWdK/view?usp=sharing" target="_blank">Resume</a>
         </motion.a>
       </div>
 
