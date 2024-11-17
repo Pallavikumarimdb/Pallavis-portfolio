@@ -14,7 +14,7 @@ const Projects = () => {
         <ProjectCard
           src="/Cryptivo.png"
           title="Cryptivo"
-          ActileLink=""
+          ActileLink="https://cryptivo.vercel.app/"
           GithubLink="https://github.com/Pallavikumarimdb/Cryptivo"
           description="A next-generation, decentralized digital currency designed to provide fast, secure, and efficient transactions on the blockchain. With a focus on transparency, low transaction fees, and interoperability."
           techstack="reactJs, NodeJs, JavaScript, Tailwind"
