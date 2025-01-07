@@ -10,10 +10,10 @@ export default function Home() {
     <main className="h-full w-full">
       <div className="flex flex-col gap-20">
         <Hero />
-        <Skills />
         <Projects />
-        <Encryption />
         <TimelineDemo />
+        <Skills />
+        <Encryption />
         {/* <TimelineDemo /> */}
       </div>
     </main>

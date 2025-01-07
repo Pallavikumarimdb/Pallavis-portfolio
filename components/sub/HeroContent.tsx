@@ -49,12 +49,12 @@ const HeroContent = () => {
         >
           I&apos;m a Full Stack Software Engineer with experience in user-friendly web applications and Software development with expertise in the MERN stack. Check out my projects and skills.
         </motion.p>
-        <motion.a
+        <motion.div
           variants={slideInFromLeft(1)}
           className="py-2 button-primary text-center text-white cursor-pointer rounded-lg max-w-[200px]"
         >
           <a href="https://drive.google.com/file/d/1vNgaq9Pxr3JwfgvIc53RxTniiResFWdK/view?usp=sharing" target="_blank">Resume</a>
-        </motion.a>
+        </motion.div>
       </div>
 
       <motion.div

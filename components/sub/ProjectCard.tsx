@@ -13,16 +13,16 @@ interface Props {
 const ProjectCard = ({ src, title, ActileLink, GithubLink, description, techstack}: Props) => {
   return (
     <>
-        <div className="relative overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] z-[20]">
+        <div className="relative w-1/3 rounded-lg shadow-lg border border-[#2A0E61] z-[20]">
       <Image
         src={src}
         alt={title}
         width={1000}
         height={1000}
-        className="w-full object-contain"
+        className="w-full object-contain rounded-lg"
       />
 
-      <div className="relative p-4">
+      <div className="mt-auto relative p-4">
         <h1 className="text-1xl font-semibold text-white">{title}<a className="ml-5 float-right"href={ActileLink} target="_blank">🔗</a>  <a className="ml-8  float-right" href={GithubLink} target="_blank"><Image
              style={{display:"inline-block"}}
               src="/gitwhite.png"
