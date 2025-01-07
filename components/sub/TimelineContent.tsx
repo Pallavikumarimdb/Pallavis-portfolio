@@ -118,16 +118,10 @@ export function TimelineDemo() {
 
           <div className="mb-8">
             <li className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-            ⏳ DevScrypt : A freelancing site for crypto developer
+            ⏳ CodeWaveAI : Chat and AI Code Generation platform
             </li>
             <li className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-            🚧 Cryptivo : Decentralized Currency 
-            </li>
-            <li className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Portfolio Website
-            </li>
-            <li className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Ai Powered Chrome Extension
+            🚧 @Note : A modern, user-friendly note-taking application
             </li>
             <li className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
             ⏳ Learning new Tech Stacks : Cohort 3.0
