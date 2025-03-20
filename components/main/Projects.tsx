@@ -13,6 +13,22 @@ const Projects = () => {
       </h1>
       <div className="flex flex-wrap md:flex-row gap-16 ml-[20%]">
       <ProjectCard
+          src="/invocraft.png"
+          title="InvoCraft"
+          ActileLink="https://invocraft-ashy.vercel.app/"
+          GithubLink="https://github.com/Pallavikumarimdb/invocraft"
+          description="Streamlining business operations with Invoice & Customer Management Portal."
+          techstack="NextJS, NestJs, Typescript, Tailwind, pdfKit"
+        />
+        <ProjectCard
+          src="/embedded.png"
+          title="SimulateCircuit"
+          ActileLink="https://github.com/Pallavikumarimdb/Simulate-Circuit"
+          GithubLink="https://github.com/Pallavikumarimdb/Simulate-Circuit"
+          description="Embedded development platform that generates, optimizes, and simulates microcontroller Code."
+          techstack="NextJS, NodeJs, Typescript, Tailwind, GeminiAPI"
+        />
+      <ProjectCard
           src="/home.png"
           title="@Note"
           ActileLink="https://mind-map-nine-sandy.vercel.app/"
@@ -25,8 +41,24 @@ const Projects = () => {
           title="CodeWaveAI"
           ActileLink="https://code-wave-ai.vercel.app/"
           GithubLink="https://github.com/Pallavikumarimdb/CodeWaveAI"
-          description="Chat and AI Code Generation platform that enables seamless collaboration by integrating AI-powered responses into group chats , enhancing team communication and productivity. "
-          techstack="reactJs, NodeJs, Typescript, Tailwind"
+          description="A Bolt-like application where users can prompt and generate websites. "
+          techstack="reactJs, NodeJs, Typescript, Tailwind, GeminiAPI/ClaudeAPI"
+        />
+        <ProjectCard
+          src="/ochiLanding.png"
+          title="MoterCar"
+          ActileLink="https://motor-car-ochre.vercel.app/"
+          GithubLink="https://github.com/Pallavikumarimdb/Landing-Pages/tree/main/apps/motor-car"
+          description="Landing Page for Car agency inspired by ochi Designs."
+          techstack="NextJs, Typesctipt, Tailwind, Framer-motion"
+        />
+        <ProjectCard
+          src="/Thirtysixstudio.png"
+          title="Thirtysixstudio"
+          ActileLink="https://lightning-fast.vercel.app/"
+          GithubLink="https://github.com/Pallavikumarimdb/Landing-Pages/tree/main/apps/lightning-fast"
+          description="Landing Page Clone of Thirtysixstudio Designs."
+          techstack="NextJs, Typesctipt, Tailwind, Framer-motion"
         />
         <ProjectCard
           src="/Cryptivo.png"
@@ -34,14 +66,6 @@ const Projects = () => {
           ActileLink="https://cryptivo.vercel.app/"
           GithubLink="https://github.com/Pallavikumarimdb/Cryptivo"
           description="Landing Page for next-generation, decentralized digital currency designed to provide fast, secure, and efficient transactions on the blockchain. With a focus on transparency, low transaction fees, and interoperability."
-          techstack="reactJs, NodeJs, JavaScript, Tailwind"
-        />
-        <ProjectCard
-          src="/DevScrypt.png"
-          title="DevScrypt"
-          ActileLink=""
-          GithubLink="https://github.com/Pallavikumarimdb/DevScrypt"
-          description="Landing Page for freelance crypto developers. It provides a unique space where blockchain and cryptocurrency developers can connect with clients who need their specialized skills."
           techstack="reactJs, NodeJs, JavaScript, Tailwind"
         />
         <ProjectCard
@@ -61,11 +85,11 @@ const Projects = () => {
           techstack="JavaScript, HTML, CSS, json"
         />
       </div>
-      <div
+      {/* <div
         className="mt-10 px-4 py-2 button-primary text-center text-white cursor-pointer rounded-lg max-w-[200px] z-[20]"
       >
         <a href="https://github.com/Pallavikumarimdb/AI_and_ML--MiniProjects">Mini Projects</a>
-      </div>
+      </div> */}
     </div>  
   );
 };
