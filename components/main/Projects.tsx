@@ -21,6 +21,14 @@ const Projects = () => {
           techstack="NextJS, NestJs, Typescript, Tailwind, pdfKit"
         />
         <ProjectCard
+          src="/vexinai.png"
+          title="VexonAI"
+          ActileLink="https://vexon-ai.vercel.app/"
+          GithubLink="https://github.com/Pallavikumarimdb/VexonAI"
+          description="AI-powered developer tool that helps engineers understand, summarize, and navigate large codebases effortlessly."
+          techstack="NextJS, Typescript, Octokit, LangChain, VectorEmbeddings, Gemini API, PostgreSQL, Prisma"
+        />
+        <ProjectCard
           src="/embedded.png"
           title="SimulateCircuit"
           ActileLink="https://github.com/Pallavikumarimdb/Simulate-Circuit"
