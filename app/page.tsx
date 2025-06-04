@@ -3,7 +3,6 @@ import Hero from "@/components/main/Hero";
 import Projects from "@/components/main/Projects";
 import Skills from "@/components/main/Skills";
 import {TimelineDemo} from "@/components/sub/TimelineContent";
-// import Image from "next/image";
 
 export default function Home() {
   return (
@@ -12,9 +11,8 @@ export default function Home() {
         <Hero />
         <Projects />
         <TimelineDemo />
-        <Skills />
-        <Encryption />
-        {/* <TimelineDemo /> */}
+        {/* <Skills /> */}
+        {/* <Encryption /> */}
       </div>
     </main>
   );
