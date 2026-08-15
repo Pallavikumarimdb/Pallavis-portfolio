@@ -1,15 +1,28 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import StarsCanvas from "@/components/main/StarBackground";
 import Navbar from "@/components/main/Navbar";
 import Footer from "@/components/main/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Pallavi's Portfolio",
-  description: "This is my portfolio",
+  title: "Pallavi Kumari - Full-Stack & AI Engineer",
+  description:
+    "Full-Stack Software Engineer building web and AI-powered products. 80+ merged open-source contributions across 15+ projects.",
+  openGraph: {
+    title: "Pallavi Kumari - Full-Stack & AI Engineer",
+    description:
+      "Full-Stack Software Engineer building web and AI-powered products. 80+ merged open-source contributions across 15+ projects.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -18,10 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} bg-[#0A0A0A] overflow-y-scroll overflow-x-hidden`}
-      >
+    <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
+      <body className="bg-background font-sans text-zinc-300 antialiased overflow-x-hidden">
         <Navbar />
         {children}
         <Footer />

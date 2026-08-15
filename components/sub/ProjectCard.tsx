@@ -1,41 +1,60 @@
 import Image from "next/image";
 import React from "react";
+import type { Project } from "@/constants";
 
-interface Props {
-  src: string;
-  title: string;
-  description: string;
-  techstack: string;
-  ActileLink: string;
-  GithubLink: string;
-}
+const ProjectCard = ({ project }: { project: Project }) => {
+  const { title, src, description, tech, live, repo } = project;
 
-const ProjectCard = ({ src, title, ActileLink, GithubLink, description, techstack}: Props) => {
   return (
-    <>
-        <div className="relative mb-10 rounded-lg shadow-lg border border-[#2A0E61] z-[20] items-center justify-center">
-      <Image
-        src={src}
-        alt={title}
-        width={1000}
-        height={1000}
-        className="w-full object-contain rounded-lg"
-      />
-
-      <div className="mt-auto relative p-4">
-        <h1 className="text-1xl font-semibold text-white">{title}<a className="ml-5 float-right"href={ActileLink} target="_blank">🔗</a>  <a className="ml-8  float-right" href={GithubLink} target="_blank"><Image
-             style={{display:"inline-block"}}
-              src="/gitwhite.png"
-              alt="githubLink"
-              key="Github"
-              width={24}
-              height={24}
-            /></a> </h1> 
-        <p className="text-sm/[17px] mt-2 text-gray-300">{description}</p>
-        <p className="text-sm/[25px] mt-2 text-zinc-500 font-bold">💡 {techstack}</p>
+    <li className="group flex gap-5 py-7">
+      <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-md border border-line bg-panel md:h-16 md:w-32">
+        <Image
+          src={src}
+          alt={title}
+          fill
+          sizes="128px"
+          className="object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
+        />
       </div>
-    </div>
-    </>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 className="truncate font-serif text-base text-zinc-100 md:text-lg">
+            {title}
+          </h3>
+          <div className="flex shrink-0 items-center gap-4 font-mono text-[11px]">
+            <a
+              href={repo}
+              target="_blank"
+              rel="noreferrer"
+              className="text-zinc-500 transition-colors hover:text-zinc-100"
+            >
+              code
+            </a>
+            <a
+              href={live}
+              target="_blank"
+              rel="noreferrer"
+              className="text-zinc-500 transition-colors hover:text-zinc-100"
+            >
+              live <span className="align-super">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">
+          {description}
+        </p>
+
+        <div className="mt-2.5 flex flex-wrap gap-x-3.5 gap-y-1">
+          {tech.map((t) => (
+            <span key={t} className="font-mono text-[11px] text-zinc-500">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </li>
   );
 };
 
