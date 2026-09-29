@@ -85,7 +85,7 @@ export default function BlogFilterList({
 
       {/* Posts Grid */}
       {filteredPosts.length > 0 ? (
-        <div className="grid gap-6">
+        <div className="grid gap-2.5 sm:gap-3">
           {filteredPosts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}

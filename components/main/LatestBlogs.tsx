@@ -34,7 +34,7 @@ export default function LatestBlogs() {
           </Link>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid gap-3">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
