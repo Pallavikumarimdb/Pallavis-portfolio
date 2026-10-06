@@ -11,13 +11,16 @@ import "prismjs/components/prism-json";
 import "prismjs/components/prism-python";
 
 export const Callout = ({
+  type = "info",
   title,
   children,
 }: {
   type?: "info" | "warning" | "success" | "tip";
   title?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
+  if (!children && !title) return null;
+
   return (
     <aside className="my-6 border-l-2 border-zinc-600 bg-panel/50 px-4 py-3 text-[13px] leading-relaxed text-zinc-300">
       {title && (
@@ -25,7 +28,7 @@ export const Callout = ({
           {title}
         </span>
       )}
-      <div className="text-zinc-400 [&>p]:m-0">{children}</div>
+      {children && <div className="text-zinc-400 [&>p]:m-0">{children}</div>}
     </aside>
   );
 };
@@ -140,12 +143,29 @@ export const Pre = ({
 
 export const ArchitectureBox = ({
   title,
-  steps = [],
+  steps,
 }: {
-  title: string;
-  steps?: { label: string; desc: string; latency?: string }[];
+  title?: string;
+  steps?: { label?: string; desc?: string; latency?: string }[] | string;
 }) => {
-  const safeSteps = Array.isArray(steps) ? steps : [];
+  let rawSteps: any = steps;
+  if (typeof rawSteps === "string") {
+    try {
+      rawSteps = JSON.parse(rawSteps);
+    } catch {
+      rawSteps = [];
+    }
+  }
+
+  const safeSteps = Array.isArray(rawSteps)
+    ? rawSteps.filter((s) => Boolean(s && (s.label || s.desc)))
+    : [];
+
+  // Do not render anything if title is missing or there are no architecture steps
+  if (!title || safeSteps.length === 0) {
+    return null;
+  }
+
   return (
     <div className="my-8 rounded-lg border border-line bg-panel p-5">
       <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
@@ -169,8 +189,12 @@ export const ArchitectureBox = ({
                   </span>
                 )}
               </div>
-              <p className="font-semibold text-zinc-200 text-sm mb-1">{s.label}</p>
-              <p className="text-xs text-zinc-400 leading-snug">{s.desc}</p>
+              {s.label && (
+                <p className="font-semibold text-zinc-200 text-sm mb-1">{s.label}</p>
+              )}
+              {s.desc && (
+                <p className="text-xs text-zinc-400 leading-snug">{s.desc}</p>
+              )}
             </div>
           </div>
         ))}

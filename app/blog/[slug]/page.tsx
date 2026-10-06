@@ -81,34 +81,44 @@ export default async function BlogPostPage({ params }: PostPageProps) {
 
         {/* Post Header */}
         <header className="mb-10 border-b border-line pb-8">
-          <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-zinc-500 mb-3">
-            <span className="flex items-center gap-1.5">
-              <FiCalendar className="h-3.5 w-3.5" />
-              {formattedDate}
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1.5">
-              <FiClock className="h-3.5 w-3.5" />
-              {post.readingTime}
-            </span>
-          </div>
+          {(post.date || post.readingTime) && (
+            <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-zinc-500 mb-3">
+              {post.date && (
+                <span className="flex items-center gap-1.5">
+                  <FiCalendar className="h-3.5 w-3.5" />
+                  {formattedDate}
+                </span>
+              )}
+              {post.date && post.readingTime && <span>•</span>}
+              {post.readingTime && (
+                <span className="flex items-center gap-1.5">
+                  <FiClock className="h-3.5 w-3.5" />
+                  {post.readingTime}
+                </span>
+              )}
+            </div>
+          )}
 
           <h1 className="font-serif text-3xl font-medium leading-tight text-zinc-100 sm:text-4xl">
             {post.title}
           </h1>
 
-          <p className="mt-4 text-base leading-relaxed text-zinc-400">
-            {post.summary}
-          </p>
+          {post.summary && (
+            <p className="mt-4 text-base leading-relaxed text-zinc-400">
+              {post.summary}
+            </p>
+          )}
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-line/60">
-            <div className="flex flex-wrap items-center gap-2">
-              {post.tags.map((tag) => (
-                <span key={tag} className="chip">
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                {post.tags.map((tag) => (
+                  <span key={tag} className="chip">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <ShareBar title={post.title} slug={post.slug} />
           </div>
@@ -118,6 +128,9 @@ export default async function BlogPostPage({ params }: PostPageProps) {
         <div className="prose prose-invert prose-zinc max-w-none text-zinc-300 prose-headings:font-serif prose-headings:text-zinc-100 prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-p:text-zinc-300 prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline prose-code:before:content-none prose-code:after:content-none prose-pre:bg-transparent prose-pre:p-0 prose-ul:my-4 prose-li:my-1 prose-blockquote:border-l-2 prose-blockquote:border-zinc-500 prose-blockquote:bg-panel/40 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r prose-blockquote:text-zinc-300 prose-blockquote:not-italic">
           <MDXRemote
             source={post.content}
+            options={{
+              blockJS: false,
+            }}
             components={{
               Callout,
               ArchitectureBox,
