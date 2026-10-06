@@ -1,8 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import ProjectCard from "../sub/ProjectCard";
 import { Projects as ProjectsData } from "@/constants";
 
+type Filter = "active" | "previous";
+
+const FILTERS: { key: Filter; label: string }[] = [
+  { key: "active", label: "Actively building" },
+  { key: "previous", label: "Past Projects" },
+];
+
 const Projects = () => {
+  const [filter, setFilter] = useState<Filter>("active");
+
+  const visible = ProjectsData.filter(
+    (project) => (project.status ?? "previous") === filter
+  );
+
   return (
     <section id="projects" className="py-20">
       <div className="container-x">
@@ -23,8 +38,38 @@ const Projects = () => {
           .
         </p>
 
-        <ul className="mt-10 divide-y divide-line border-y border-line">
-          {ProjectsData.map((project) => (
+        <div
+          role="tablist"
+          aria-label="Project priority"
+          className="mt-10 flex flex-wrap gap-2 border-b border-line"
+        >
+          {FILTERS.map(({ key, label }) => {
+            const isActive = filter === key;
+            const count = ProjectsData.filter(
+              (project) => (project.status ?? "previous") === key
+            ).length;
+
+            return (
+              <button
+                key={key}
+                role="tab"
+                type="button"
+                aria-selected={isActive}
+                onClick={() => setFilter(key)}
+                className={`-mb-px flex items-center gap-2 border-b-2 px-1 pb-3 pt-1 font-mono text-xs uppercase tracking-wider transition-colors ${isActive
+                  ? "border-zinc-100 text-zinc-100"
+                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+                  }`}
+              >
+                {label}
+                <span className="text-[10px] text-zinc-600">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <ul className="divide-y divide-line border-b border-line">
+          {visible.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
         </ul>
