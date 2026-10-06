@@ -3,6 +3,7 @@ export const NavLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Open Source", href: "#open-source" },
+  { name: "Blog", href: "/blog" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -59,9 +60,10 @@ export type Project = {
   title: string;
   description: string;
   tech: string[];
-  live: string;
+  live?: string;
   repo: string;
   featured?: boolean;
+  status?: "active" | "previous";
 };
 
 export const Projects: Project[] = [
@@ -74,6 +76,16 @@ export const Projects: Project[] = [
     live: "https://equi-gen.vercel.app/",
     repo: "https://github.com/Pallavikumarimdb/EquiGen",
     featured: true,
+    status: "active",
+  },
+  {
+    src: "/voiceai.png",
+    title: "VoiceBench",
+    description:
+      "Regulated voice agent platform with a ~880ms p50 streaming pipeline - sherpa-ONNX ASR, neural TTS, sub-25ms barge-in, deterministic compliance guards and a SHA-256 hash-chained audit trail.",
+    tech: ["TypeScript", "Python", "LangGraph", "sherpa-onnx", "FastAPI", "WebSockets"],
+    repo: "https://github.com/Pallavikumarimdb/voicebench",
+    status: "active",
   },
   {
     src: "/project2.png",
@@ -84,6 +96,7 @@ export const Projects: Project[] = [
     live: "https://replaysafe.vercel.app/",
     repo: "https://github.com/JobGuards/Replaysafe",
     featured: true,
+    status: "active",
   },
   {
     src: "/vexinai.png",

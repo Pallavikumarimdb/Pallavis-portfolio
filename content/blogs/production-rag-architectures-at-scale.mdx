@@ -1,0 +1,121 @@
+---
+title: "Production RAG Architectures: Hybrid Search, Reranking, and Context Pruning"
+slug: "production-rag-architectures-at-scale"
+date: "2026-09-10"
+summary: "Moving beyond naive vector search tutorials. How to build enterprise-grade Retrieval-Augmented Generation with reciprocal rank fusion, cross-encoder reranking, and citation guarantees."
+tags: ["AI/ML", "LLM", "RAG", "System Design"]
+readTime: "9 min read"
+featured: true
+---
+
+Most Retrieval-Augmented Generation (RAG) tutorials follow a toy blueprint: parse a PDF into 500-token chunks, compute dense embeddings via an OpenAI or HuggingFace model, store them in a vector database, and retrieve top-$k$ chunks via cosine similarity.
+
+In production environments with technical documentation, SEC filings, or complex codebases, naive vector search fails in subtle and costly ways:
+- **Keyword blindness**: Missing exact serial numbers, acronyms, or function names (`CVE-2024-38077` or `getUserById`).
+- **Context fragmentation**: The embedding contains part of a sentence while the critical condition was in the preceding paragraph.
+- **Lost in the Middle**: LLMs degrade in reasoning ability when relevant context is buried amidst irrelevant retrieved noise.
+
+Here is how we engineer a high-precision RAG pipeline capable of surviving production workloads.
+
+---
+
+### Step 1: Hybrid Search with Reciprocal Rank Fusion (RRF)
+
+Dense vector search is phenomenal at conceptual, semantic queries. However, sparse search (BM25) remains unbeatable for exact token matching, code identifiers, and specific IDs.
+
+Rather than picking one, we combine both search indices using **Reciprocal Rank Fusion**:
+
+<ArchitectureBox
+  title="Hybrid Retrieval Pipeline"
+  steps={[
+    {
+      label: "Dual Query Execution",
+      desc: "Query is dispatched concurrently to BM25 index and dense vector index (e.g. pgvector / Pinecone).",
+      latency: "25ms"
+    },
+    {
+      label: "Reciprocal Rank Fusion",
+      desc: "Scores are normalized and fused using RRF formula (k=60) to eliminate score distribution skew.",
+      latency: "2ms"
+    },
+    {
+      label: "Cross-Encoder Rerank",
+      desc: "Top 25 candidates pass through a Cohere or BGE cross-encoder to select the true top 5 chunks.",
+      latency: "80ms"
+    }
+  ]}
+/>
+
+The RRF score for a document `d` is defined as:
+
+```text
+RRF_Score(d) = Σ [ 1 / (k + r_m(d)) ]  for all m in M
+```
+
+Where `M` is the set of search algorithms (BM25 and Vector), `r_m(d)` is the document's rank under system `m`, and `k` is a smoothing constant (typically set to 60).
+
+---
+
+### Step 2: The Two-Stage Retrieval with Cross-Encoder Rerankers
+
+Bi-encoders (embedding models) compute vector representations of queries and documents independently. This is extremely fast for retrieval over millions of records, but it cannot capture token-to-token cross-attention between query words and document words.
+
+To achieve state-of-the-art recall, we use a two-stage approach:
+1. **Candidate Retrieval (Stage 1)**: Retrieve the top 20–30 documents using Hybrid Search (BM25 + Vector).
+2. **Cross-Encoder Reranker (Stage 2)**: Feed `(query, candidate)` pairs directly into a Cross-Encoder (e.g., `bge-reranker-large` or Cohere Rerank).
+
+```typescript
+import { CohereClient } from "cohere-ai";
+
+const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
+
+async function rerankCandidates(query: string, candidates: DocumentChunk[], topN: number = 5) {
+  const response = await cohere.rerank({
+    model: "rerank-english-v3.0",
+    query: query,
+    documents: candidates.map((c) => c.text),
+    topN: topN,
+    returnDocuments: false,
+  });
+
+  return response.results.map((res) => ({
+    chunk: candidates[res.index],
+    relevanceScore: res.relevanceScore,
+  }));
+}
+```
+
+<Callout type="tip" title="Cost & Latency Trade-Off">
+Reranking takes ~70–90ms for 25 candidates. In exchange, the precision improvement (P@5) routinely jumps from ~62% to over 88% on domain-specific corpora.
+</Callout>
+
+---
+
+### Step 3: Hierarchical Chunking (Parent-Child Indexing)
+
+A frequent pitfall is choosing between small chunks (great for embedding precision) and large chunks (necessary for LLM synthesis context).
+
+The solution is **Parent-Child Retrieval**:
+* Embed and search on small, focused child chunks (e.g., 150 tokens).
+* Store a reference to the larger parent section (e.g., 800 tokens).
+* When a child chunk matches the query, hydrate the LLM prompt with the parent block.
+
+This gives you pinpoint embedding search accuracy without starving the generator model of surrounding context.
+
+---
+
+### Step 4: Strict Citation and Attribution Guardrails
+
+To prevent hallucination in enterprise setups:
+1. Every chunk injected into the prompt must be prefixed with an internal XML tag: `` `<source id="doc_3" page="12" doc_name="financial_q3.pdf" />` ``.
+2. The system prompt instructs the model: *"You may only make factual assertions supported by a cited `<source id="..." />`. If the information cannot be verified from the sources, state that explicitly."*
+3. A post-generation verification step runs regex parsing to validate that every cited sentence has lexical overlap with the referenced chunk.
+
+---
+
+### Key Takeaways
+
+Building RAG systems that withstand adversarial edge cases requires treating information retrieval as a disciplined discipline rather than an off-the-shelf API call:
+* Always implement BM25 alongside dense vector search.
+* Use a cross-encoder reranker for your top candidate window.
+* Decouple your retrieval chunk size from your generation context window via parent-child chunking.

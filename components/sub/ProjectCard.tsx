@@ -31,14 +31,16 @@ const ProjectCard = ({ project }: { project: Project }) => {
             >
               code
             </a>
-            <a
-              href={live}
-              target="_blank"
-              rel="noreferrer"
-              className="text-zinc-500 transition-colors hover:text-zinc-100"
-            >
-              live <span className="align-super">↗</span>
-            </a>
+            {live && (
+              <a
+                href={live}
+                target="_blank"
+                rel="noreferrer"
+                className="text-zinc-500 transition-colors hover:text-zinc-100"
+              >
+                live <span className="align-super">↗</span>
+              </a>
+            )}
           </div>
         </div>
 

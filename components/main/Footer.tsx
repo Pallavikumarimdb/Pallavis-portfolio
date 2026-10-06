@@ -16,15 +16,18 @@ const Footer = () => {
           © {new Date().getFullYear()} Pallavi Kumari
         </p>
         <div className="flex items-center gap-6">
-          {NavLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="hidden font-mono text-[11px] text-zinc-500 transition-colors hover:text-zinc-100 sm:inline"
-            >
-              {l.name}
-            </a>
-          ))}
+          {NavLinks.map((l) => {
+            const href = l.href.startsWith("#") ? `/${l.href}` : l.href;
+            return (
+              <a
+                key={l.href}
+                href={href}
+                className="hidden font-mono text-[11px] text-zinc-500 transition-colors hover:text-zinc-100 sm:inline"
+              >
+                {l.name}
+              </a>
+            );
+          })}
         </div>
         <div className="flex items-center gap-4">
           {Socials.map((s) => (
